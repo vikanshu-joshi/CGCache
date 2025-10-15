@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import json
+import argparse
 
 app = Flask(__name__)
 
@@ -144,7 +145,15 @@ def get_all_keys():
 
 
 if __name__ == '__main__':
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Run Flask cache server')
+    parser.add_argument('--port', type=int, default=80, 
+                        help='Port to run the server on (default: 80)')
+    parser.add_argument('--debug', action='store_true', 
+                        help='Run in debug mode (default: False)')
+    args = parser.parse_args()
+    
     # Production configuration
-    app.run(debug=False, host='0.0.0.0', port=80, threaded=True)
+    app.run(debug=args.debug, host='0.0.0.0', port=args.port, threaded=True)
 
 
